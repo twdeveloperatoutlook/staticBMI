@@ -1,0 +1,22 @@
+name: Deploy Static Site to Render
+
+on:
+  push:
+    branches:
+      - main    # 你要自動部署的分支（通常是 main）
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 如果你的靜態網站需要 Build，可以加這段
+    # - name: Build static site
+    #   run: npm install && npm run build
+
+    - name: Deploy to Render
+      run: |
+        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
